@@ -2,19 +2,19 @@ import React from "react";
 
 const OrderList = ({ orders, meta }) => {
   return (
-    <div className="container mx-auto p-4">
+    <div className="mt-8">
       <h4 className="mb-4 capitalize">
         total orders : {meta.pagination.total}
       </h4>
       <div className="overflow-x-auto">
-        <table className="table w-full">
+        <table className="table table-zebra">
           <thead>
             <tr>
               <th>Name</th>
               <th>Address</th>
               <th>Products</th>
               <th>Cost</th>
-              <th>Date</th>
+              <th className="hidden sm:block">Date</th>
             </tr>
           </thead>
           <tbody>
@@ -24,7 +24,9 @@ const OrderList = ({ orders, meta }) => {
                 <td>{order.attributes.address}</td>
                 <td>{order.attributes.cartItems.length}</td>
                 <td>{order.attributes.orderTotal}</td>
-                <td>{new Date(order.attributes.createdAt).toLocaleString()}</td>
+                <td className="hidden sm:block">
+                  {new Date(order.attributes.createdAt).toLocaleString()}
+                </td>
               </tr>
             ))}
           </tbody>
