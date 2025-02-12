@@ -102,10 +102,10 @@ const Navbar = () => {
                   </li>
                   <li>
                     <NavLink
-                      to="/order"
+                      to="/orders"
                       className="capitalize btn btn-ghost text-xl sm:text-m"
                     >
-                      Order
+                      Orders
                     </NavLink>
                   </li>
                 </>
@@ -164,7 +164,7 @@ const Navbar = () => {
                 </li>
                 <li>
                   <NavLink
-                    to="/order"
+                    to="/orders"
                     className="capitalize btn btn-ghost text-xl sm:text-m"
                   >
                     Order

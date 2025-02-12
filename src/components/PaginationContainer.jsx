@@ -7,10 +7,11 @@ import {
 } from "react-router-dom";
 
 const PaginationContainer = () => {
-  const { products, meta } = useLoaderData();
+  const { meta } = useLoaderData();
   const { search, pathname } = useLocation();
   const totalPages = meta.pagination.pageCount;
   const curPage = meta.pagination.page;
+
   const navigate = useNavigate();
   const pagesArray = Array.from(
     { length: totalPages },
@@ -30,7 +31,7 @@ const PaginationContainer = () => {
     console.log(pathname); //what path/route we are on (/products)
     const newQueryString = new URLSearchParams(search);
     newQueryString.set("page", page);
-    const path = `${pathname}?${newQueryString.toString(curPage)}`;
+    const path = `${pathname}?${newQueryString.toString()}`;
     console.log(path);
     navigate(path);
   };

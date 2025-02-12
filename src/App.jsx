@@ -21,6 +21,9 @@ import { productsLoader } from "./pages/Products";
 import { action as registerAction } from "./pages/Register";
 import { action as loginAction } from "./pages/Login";
 import { loader as checkoutLoader } from "./pages/Checkout";
+import { action as checkoutAction } from "./components/CheckoutForm";
+import { loader as orderLoader } from "./pages/Orders";
+
 import store from "./store";
 
 const queryClient = new QueryClient({
@@ -59,10 +62,12 @@ const router = createBrowserRouter([
         path: "/checkout",
         element: <Checkout />,
         loader: checkoutLoader(store),
+        action: checkoutAction(store),
       },
       {
         path: "/orders",
         element: <Orders />,
+        loader: orderLoader(store),
       },
       {
         path: "/about",
