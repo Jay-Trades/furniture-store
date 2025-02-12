@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import { clearCart } from "../store/cart/cartSlice";
 
 export const action =
-  (store) =>
+  (store, queryClient) =>
   async ({ request }) => {
     //get user data, store data , jwt token. Order will only work with JWT token
     const formData = await request.formData(); //get the formData from request
@@ -37,6 +37,9 @@ export const action =
         }
       );
       console.log(response);
+      queryClient.removeQueries("orders");
+      // queryClient.invalidateQueries("orders");
+
       store.dispatch(clearCart());
       toast.success("order sent successfully");
       return redirect("/orders");

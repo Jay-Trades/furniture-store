@@ -9,7 +9,7 @@ import { SectionTitle } from "../components";
 // probably filtered on user id?
 
 export const loader =
-  (store) =>
+  (store, queryClient) =>
   async ({ request }) => {
     const user = store.getState().userState.user;
 
@@ -24,11 +24,19 @@ export const loader =
     console.log(params);
 
     try {
-      const response = await customFetch.get("orders", {
-        params,
-        headers: {
-          Authorization: `Bearer ${user.jwt}`,
-        },
+      const response = await queryClient.ensureQueryData({
+        queryKey: [
+          "orders",
+          user.username,
+          params.page ? parseInt(params.page) : 1,
+        ],
+        queryFn: () =>
+          customFetch.get("orders", {
+            params,
+            headers: {
+              Authorization: `Bearer ${user.jwt}`,
+            },
+          }),
       });
       const orders = response.data.data;
       // console.log(orders);

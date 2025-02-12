@@ -29,7 +29,9 @@ import store from "./store";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5,
+      cacheTime: 10 * 60 * 1000,
+      staleTime: 5 * 60 * 1000,
+      retry: 2,
     },
   },
 });
@@ -42,17 +44,17 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
-        loader: landingLoader,
+        loader: landingLoader(queryClient),
       },
       {
         path: "/products",
         element: <Products />,
-        loader: productsLoader,
+        loader: productsLoader(queryClient),
       },
       {
         path: "/products/:id",
         element: <SingleProduct />,
-        loader: singleLoader,
+        loader: singleLoader(queryClient),
       },
       {
         path: "/cart",
@@ -62,12 +64,12 @@ const router = createBrowserRouter([
         path: "/checkout",
         element: <Checkout />,
         loader: checkoutLoader(store),
-        action: checkoutAction(store),
+        action: checkoutAction(store, queryClient),
       },
       {
         path: "/orders",
         element: <Orders />,
-        loader: orderLoader(store),
+        loader: orderLoader(store, queryClient),
       },
       {
         path: "/about",

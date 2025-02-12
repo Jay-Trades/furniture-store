@@ -4,17 +4,25 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addItem } from "../store/cart/cartSlice";
 import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
 
 // params is passed through by React Router automatically and contains the URL parameters
-export const singleLoader = async ({ params }) => {
-  const response = await customFetch.get(`/products/${params.id}`);
-  // console.log(response);
-  // console.log(params);
-  const product = response.data.data;
-  return { product };
-};
+export const singleLoader =
+  (queryClient) =>
+  async ({ params }) => {
+    const response = await queryClient.ensureQueryData({
+      queryKey: ["singleProduct", params.id],
+      queryFn: () => customFetch.get(`/products/${params.id}`),
+    });
+    console.log(response);
+    console.log(params);
+    const product = response.data.data;
+    return { product };
+  };
 
 const SingleProduct = () => {
+  // const { product } = useQuery("products", singleLoader);
+
   const { product } = useLoaderData();
   const { title, price, description, image, colors, company } =
     product.attributes;
