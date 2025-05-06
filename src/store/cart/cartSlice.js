@@ -41,6 +41,25 @@ const cartSlice = createSlice({
 
       localStorage.setItem("cart", JSON.stringify(state));
       toast.success("Item added to cart");
+      // Example function for Add to Cart button
+
+      // Now push the ecommerce data to the dataLayer
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "add_to_cart",
+        ecommerce: {
+          currency: "USD", // or your site's currency
+          value: state.cartTotal, // total value of this add
+          items: [
+            state.cartItems.map((item) => ({
+              item_id: item.id,
+              item_name: item.title,
+              price: item.price,
+              quantity: item.quantity,
+            })),
+          ],
+        },
+      });
 
       //   console.log(state.cartItems);
       //   console.log(
